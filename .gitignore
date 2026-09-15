@@ -9,7 +9,7 @@
 /src/Stealth Action Game/[Bb]uild/
 /src/Stealth Action Game/[Bb]uilds/
 /src/Stealth Action Game/[Ll]ogs/
-/src/Stealth Action Game//[Uu]ser[Ss]ettings/
+/src/Stealth Action Game/[Uu]ser[Ss]ettings/
 *.log
 
 # By default unity supports Blender asset imports, *.blend1 blender files do not need to be commited to version control.
