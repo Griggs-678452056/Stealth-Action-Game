@@ -395,6 +395,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: d9298dcc78ae34c4aaa14ff373b822b9, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 629005c4189a80c4bab177ef4062b880, type: 2}
     - target: {fileID: 13700000, guid: d9298dcc78ae34c4aaa14ff373b822b9, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -569,6 +573,11 @@ Transform:
   - {fileID: 195989176}
   m_Father: {fileID: 1601413269}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &958463458 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9500000, guid: d9298dcc78ae34c4aaa14ff373b822b9, type: 3}
+  m_PrefabInstance: {fileID: 195989175}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &961739749
 GameObject:
   m_ObjectHideFlags: 0
@@ -990,12 +999,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce3a8c041eb17274f80145972b84ad7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  <MoveSpeed>k__BackingField: 5
+  <MoveSpeed>k__BackingField: 8
   _moveAction: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  _walkAction: {fileID: -7471211009204490832, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  _walkSpeed: 3
+  _rollAction: {fileID: -2099379676528639254, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  _rollSpeed: 12
+  _rollLength: 0.4
   _characterController: {fileID: 1601413271}
   _model: {fileID: 862531894}
   _turnSpeed: 10
   _gravityScale: 5
+  _animator: {fileID: 958463458}
 --- !u!143 &1601413271
 CharacterController:
   m_ObjectHideFlags: 0
