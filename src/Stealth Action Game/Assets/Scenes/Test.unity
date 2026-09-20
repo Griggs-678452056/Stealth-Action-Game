@@ -1005,7 +1005,7 @@ MonoBehaviour:
   _walkSpeed: 3
   _rollAction: {fileID: -2099379676528639254, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   _rollSpeed: 12
-  _rollLength: 0.4
+  _rollLength: 0.8
   _characterController: {fileID: 1601413271}
   _model: {fileID: 862531894}
   _turnSpeed: 10

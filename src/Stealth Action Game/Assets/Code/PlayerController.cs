@@ -12,6 +12,7 @@ namespace Code
         private float _activeMoveSpeed;
         [SerializeField] private InputActionReference _rollAction;
         [SerializeField] private float _rollSpeed, _rollLength;
+        private float _rollCounter;
 
         [SerializeField] private CharacterController _characterController;
         [SerializeField] private Transform _model;
@@ -43,7 +44,12 @@ namespace Code
 
             if (_rollAction.action.WasPressedThisFrame())
             {
-                _animator.SetTrigger("Roll");
+                if (_rollCounter <= 0)
+                {
+                    _animator.SetTrigger("Roll");
+
+                    _rollCounter = _rollLength;
+                }
             }
 
             if (moveInput != Vector2.zero)
@@ -58,6 +64,16 @@ namespace Code
             }
 
             _ySpeed += Physics.gravity.y * Time.deltaTime * _gravityScale;
+
+            if (_rollCounter > 0)
+            {
+                _rollCounter -= Time.deltaTime;
+                _activeMoveSpeed = _rollSpeed;
+
+                Vector3 rollDirection = _model.forward;
+                moveInput.x = rollDirection.x;
+                moveInput.y = rollDirection.z;
+            }
 
             _characterController.Move(new Vector3(moveInput.x * _activeMoveSpeed, _ySpeed, moveInput.y * _activeMoveSpeed) * Time.deltaTime);
 
