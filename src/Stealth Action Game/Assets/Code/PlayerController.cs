@@ -16,6 +16,9 @@ namespace Code
         [SerializeField] private InputActionReference _aimAction, _lookAction;
         private Vector2 _lastMousePosition;
         [SerializeField] private GameObject _weapon;
+        [SerializeField] private InputActionReference _shootAction;
+        [SerializeField] private Transform _shootPoint;
+        [SerializeField] private float _range;
         [SerializeField] private CharacterController _characterController;
         [SerializeField] private Transform _model;
         [SerializeField] private float _turnSpeed;
@@ -100,6 +103,18 @@ namespace Code
                 if (aimDirection != Vector3.zero)
                 {
                     _model.rotation = Quaternion.LookRotation(aimDirection);
+                }
+
+                if (_shootAction.action.WasPressedThisFrame())
+                {                   
+                    _animator.SetTrigger("Shoot");
+
+                    RaycastHit hit;
+
+                    if (Physics.Raycast(_shootPoint.position, _shootPoint.forward, out hit, _range))
+                    {
+                        Debug.Log("Выстрел: " + hit.transform.name);
+                    }
                 }
             }
             else
