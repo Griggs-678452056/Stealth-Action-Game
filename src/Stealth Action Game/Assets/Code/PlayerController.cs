@@ -18,6 +18,7 @@ namespace Code
         [SerializeField] private GameObject _weapon;
         [SerializeField] private InputActionReference _shootAction;
         [SerializeField] private Transform _shootPoint;
+        [SerializeField] private GameObject _shootEffect, _impactEffect;
         [SerializeField] private float _range;
         [SerializeField] private CharacterController _characterController;
         [SerializeField] private Transform _model;
@@ -109,11 +110,15 @@ namespace Code
                 {                   
                     _animator.SetTrigger("Shoot");
 
+                    Instantiate(_shootEffect, _shootEffect.transform.position, _shootEffect.transform.rotation).SetActive(true);
+
                     RaycastHit hit;
 
                     if (Physics.Raycast(_shootPoint.position, _shootPoint.forward, out hit, _range))
                     {
                         Debug.Log("Выстрел: " + hit.transform.name);
+
+                        Instantiate(_impactEffect, hit.point, Quaternion.LookRotation(hit.normal)).SetActive(true);
                     }
                 }
             }
