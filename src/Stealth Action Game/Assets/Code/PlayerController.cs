@@ -25,6 +25,8 @@ namespace Code
         [SerializeField] private GameObject _shootEffect, _impactEffect;
         [SerializeField] private float _range;
 
+        [SerializeField] private LayerMask _whatCanBeShot;
+
         [SerializeField] private CharacterController _characterController;
         [SerializeField] private Transform _model;
         [SerializeField] private float _turnSpeed;
@@ -137,11 +139,16 @@ namespace Code
 
                         RaycastHit hit;
 
-                        if (Physics.Raycast(_shootPoint.position, _shootPoint.forward, out hit, _range))
+                        if (Physics.Raycast(_shootPoint.position, _shootPoint.forward, out hit, _range, _whatCanBeShot))
                         {
                             Debug.Log("Выстрел: " + hit.transform.name);
 
                             Instantiate(_impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+
+                            if (hit.transform.CompareTag("Shootable"))
+                            {
+                                hit.transform.GetComponent<ShootableObject>().DestroyObject();
+                            }
                         }
 
                         _currentAmmo--;
@@ -229,6 +236,13 @@ namespace Code
             {
                 _animator.SetBool("Aiming", true);
             }
+
+            _uiController.UpdateAmmoText(_currentAmmo, _remainingAmmo);
+        }
+
+        public void GetAmmo(int ammoToAdd)
+        {
+            _remainingAmmo += ammoToAdd;
 
             _uiController.UpdateAmmoText(_currentAmmo, _remainingAmmo);
         }
