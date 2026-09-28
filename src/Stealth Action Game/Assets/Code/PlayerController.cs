@@ -39,6 +39,8 @@ namespace Code
         [SerializeField] private InputActionReference _reloadAction;
         [SerializeField] private float _reloadTime = 2.3f;
 
+        [SerializeField] private GameObject _enemyDamageEffect;
+
         private UIController _uiController;
 
         private void Start()
@@ -141,13 +143,24 @@ namespace Code
 
                         if (Physics.Raycast(_shootPoint.position, _shootPoint.forward, out hit, _range, _whatCanBeShot))
                         {
-                            Debug.Log("Выстрел: " + hit.transform.name);
-
-                            Instantiate(_impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
-
-                            if (hit.transform.CompareTag("Shootable"))
+                            switch (hit.transform.tag)
                             {
-                                hit.transform.GetComponent<ShootableObject>().DestroyObject();
+                                case "Shootable":
+                                    hit.transform.GetComponent<ShootableObject>().DestroyObject();
+
+                                    break;
+
+                                case "Enemy":
+
+                                    hit.transform.GetComponent<EnemyController>().TakeDamage();
+                                    Instantiate(_enemyDamageEffect, hit.point, Quaternion.LookRotation(hit.normal));
+
+                                    break;
+
+                                default:
+                                    Instantiate(_impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+
+                                    break;
                             }
                         }
 
