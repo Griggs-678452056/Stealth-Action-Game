@@ -16,8 +16,8 @@ TagManager:
   - UI
   - Pickup
   - Player
-  - 
-  - 
+  - Enemy
+  - Shootable
   - 
   - 
   - 
