@@ -1,3 +1,5 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -22,6 +24,20 @@ namespace Code
         private bool _canSeePlayer;
         [SerializeField] private float _playerViewAngle, _playerViewRange;
 
+        public enum EnemyState
+        {
+            Normal,
+            Alerted,
+            Chase,
+            Searching
+        }
+        [SerializeField] private EnemyState _currentState;
+
+        [SerializeField] private float _waitToChase, _waitToSearch;
+        private float _chaseCounter, _searchCounter;
+        [SerializeField] private float _searchLength;
+        private Vector3 _searchPosition;
+
         private void Start()
         {
             _patrolPointsHolder.SetParent(null);
@@ -42,6 +58,85 @@ namespace Code
         {
             CheckForPlayer();
 
+            switch (_currentState)
+            {
+                case EnemyState.Normal:
+                    Patrol();
+                    break;
+
+                case EnemyState.Alerted:
+
+                    if (_canSeePlayer == true)
+                    {
+                        _searchPosition = _player.position;
+
+                        transform.LookAt(new Vector3(_player.position.x, transform.position.y, _player.position.z));
+
+                        _chaseCounter -= Time.deltaTime;
+
+                        if (_chaseCounter <= 0 || Vector3.Distance(transform.position, _player.position) < _playerViewRange / 2)
+                        {
+                            StartChasing();
+                        }
+                    }
+                    else
+                    {
+                        _searchCounter -= Time.deltaTime;
+
+                        if (_searchCounter <= 0)
+                        {
+                            StartSearching();
+                        }
+                    }
+
+                    break;
+
+                case EnemyState.Chase:
+                    break;
+
+                case EnemyState.Searching:
+
+                    if (Vector3.Distance(transform.position, _searchPosition) < .5f)
+                    {
+                        _agent.isStopped = true;
+
+                        _animator.SetBool("Walking", false);
+
+                        _searchCounter -= Time.deltaTime;
+
+                        if (_searchCounter <= 0)
+                        {
+                            _currentState = EnemyState.Normal;
+
+                            _agent.isStopped = false;
+                            _agent.SetDestination(_patrolPoints[_currentPatrolPoint].position);
+
+                            _animator.SetBool("Walking", true);
+                        }
+                    }
+
+                    break;
+            }
+        }
+
+        private void StartChasing()
+        {
+            _currentState = EnemyState.Chase;
+        }
+
+        private void StartSearching()
+        {
+            _currentState = EnemyState.Searching;
+
+            _searchCounter = _searchLength;
+
+            _agent.SetDestination(_searchPosition);
+            _agent.isStopped = false;
+            _animator.SetBool("Walking", true);
+        }
+
+        private void Patrol()
+        {
             if (_patrolPoints.Length > 0)
             {
                 if (Vector3.Distance(transform.position,
@@ -68,6 +163,21 @@ namespace Code
 
                         _animator.SetBool("Walking", true);
                     }
+                }
+
+                if (_canSeePlayer == true)
+                {
+                    _currentState = EnemyState.Alerted;
+
+                    _animator.SetBool("Walking", false);
+
+                    _agent.isStopped = true;
+
+                    _chaseCounter = _waitToChase;
+
+                    _searchCounter = _waitToSearch;
+
+                    _searchPosition = _player.position;
                 }
             }
         }
@@ -97,7 +207,7 @@ namespace Code
 
                 if (Vector3.Angle(transform.forward, directionToTarget) < _playerViewAngle / 2)
                 {
-                    if (Physics.Raycast(transform.position + new Vector3 (0, 1.5f, 0), directionToTarget, out RaycastHit hit, _playerViewRange))
+                    if (Physics.Raycast(transform.position + new Vector3(0, 1.5f, 0), directionToTarget, out RaycastHit hit, _playerViewRange))
                     {
                         if (hit.collider.CompareTag("Player"))
                         {
@@ -113,7 +223,7 @@ namespace Code
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
-            
+
             Vector3 endPosition = Vector3.zero;
 
             endPosition.x = Mathf.Sin(Mathf.Deg2Rad * ((_playerViewAngle / 2) + transform.rotation.eulerAngles.y)) * _playerViewRange;

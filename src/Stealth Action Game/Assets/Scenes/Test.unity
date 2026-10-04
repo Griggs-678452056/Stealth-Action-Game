@@ -1949,12 +1949,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   _agent: {fileID: 435673040}
   _patrolPointsHolder: {fileID: 566150959}
-  _patrolPoints: []
+  _patrolPoints:
+  - {fileID: 970239231}
+  - {fileID: 2121177298}
+  - {fileID: 1814743097}
+  - {fileID: 822423269}
   _pointWaitTime: 2.5
   _animator: {fileID: 1893138227}
   _health: 3
   _playerViewAngle: 90
   _playerViewRange: 7.5
+  _currentState: 0
+  _waitToChase: 2
+  _waitToSearch: 1
+  _searchLength: 5
 --- !u!195 &435673040
 NavMeshAgent:
   m_ObjectHideFlags: 0
