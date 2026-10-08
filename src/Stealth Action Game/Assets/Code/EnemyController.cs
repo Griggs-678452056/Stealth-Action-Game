@@ -1,7 +1,6 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 namespace Code
 {
@@ -37,6 +36,13 @@ namespace Code
         private float _chaseCounter, _searchCounter;
         [SerializeField] private float _searchLength;
         private Vector3 _searchPosition;
+
+        private float _lookAroundCounter, _lookAroundAngle;
+        [SerializeField] private float _searchTurnSpeed;
+
+        [SerializeField] private float _chaseSpeed, _walkSpeed;
+
+        private float _chaseAdjustCounter;
 
         private void Start()
         {
@@ -92,36 +98,84 @@ namespace Code
                     break;
 
                 case EnemyState.Chase:
+
+                    if (_canSeePlayer == true)
+                    {
+                        _chaseAdjustCounter -= Time.deltaTime;
+
+                        if (_chaseAdjustCounter <= 0)
+                        {
+                            _agent.SetDestination(_player.position);
+
+                            _chaseAdjustCounter = 0.2f;
+                        }
+                    }
+                    else
+                    {
+                        StartSearching();
+                    }
+
                     break;
 
                 case EnemyState.Searching:
 
-                    if (Vector3.Distance(transform.position, _searchPosition) < .5f)
+                    SearchingProcess();
+
+                    if (_canSeePlayer == true)
                     {
-                        _agent.isStopped = true;
-
-                        _animator.SetBool("Walking", false);
-
-                        _searchCounter -= Time.deltaTime;
-
-                        if (_searchCounter <= 0)
-                        {
-                            _currentState = EnemyState.Normal;
-
-                            _agent.isStopped = false;
-                            _agent.SetDestination(_patrolPoints[_currentPatrolPoint].position);
-
-                            _animator.SetBool("Walking", true);
-                        }
+                        StartChasing();
                     }
 
                     break;
             }
         }
 
+        private void SearchingProcess()
+        {
+            if (Vector3.Distance(transform.position, _searchPosition) < .5f)
+            {
+                _agent.isStopped = true;
+
+                _animator.SetBool("Walking", false);
+
+                _searchCounter -= Time.deltaTime;
+
+                if (_searchCounter <= 0)
+                {
+                    _currentState = EnemyState.Normal;
+
+                    _agent.isStopped = false;
+                    _agent.SetDestination(_patrolPoints[_currentPatrolPoint].position);
+
+                    _animator.SetBool("Walking", true);
+                }
+
+                _lookAroundCounter -= Time.deltaTime;
+
+                if (_lookAroundCounter <= 0)
+                {
+                    _lookAroundCounter = Random.Range(_searchLength * .25f, _searchLength * .5f);
+
+                    _lookAroundAngle = Random.Range(-180, 180);
+                }
+
+                transform.rotation = Quaternion.RotateTowards(transform.rotation,
+                    Quaternion.Euler(0, _lookAroundAngle, 0),
+                    _searchTurnSpeed * Time.deltaTime);
+            }
+        }
+
         private void StartChasing()
         {
             _currentState = EnemyState.Chase;
+            _animator.SetBool("Chase", true);
+
+            _agent.SetDestination(_player.position);
+            _agent.isStopped = false;
+
+            _agent.speed = _chaseSpeed;
+
+            _chaseAdjustCounter = 0.2f;
         }
 
         private void StartSearching()
@@ -133,6 +187,8 @@ namespace Code
             _agent.SetDestination(_searchPosition);
             _agent.isStopped = false;
             _animator.SetBool("Walking", true);
+
+            _lookAroundCounter = 0;
         }
 
         private void Patrol()

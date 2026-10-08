@@ -1963,6 +1963,9 @@ MonoBehaviour:
   _waitToChase: 2
   _waitToSearch: 1
   _searchLength: 5
+  _searchTurnSpeed: 180
+  _chaseSpeed: 7
+  _walkSpeed: 1.5
 --- !u!195 &435673040
 NavMeshAgent:
   m_ObjectHideFlags: 0
