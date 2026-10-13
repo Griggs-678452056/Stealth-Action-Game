@@ -1503,7 +1503,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2696611183103187019, guid: 9f76101e4eac09844912f47d6bb0ae25, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2918007061440450739, guid: 9f76101e4eac09844912f47d6bb0ae25, type: 3}
       propertyPath: m_IsActive
@@ -1966,6 +1966,8 @@ MonoBehaviour:
   _searchTurnSpeed: 180
   _chaseSpeed: 7
   _walkSpeed: 1.5
+  _timeToShoot: 3
+  _moveAfterShootTime: 1
 --- !u!195 &435673040
 NavMeshAgent:
   m_ObjectHideFlags: 0

@@ -41,8 +41,10 @@ namespace Code
         [SerializeField] private float _searchTurnSpeed;
 
         [SerializeField] private float _chaseSpeed, _walkSpeed;
-
         private float _chaseAdjustCounter;
+
+        [SerializeField] private float _timeToShoot, _moveAfterShootTime;
+        private float _shootWaitCounter, _shootMoveCounter, _waitToShoot;
 
         private void Start()
         {
@@ -99,19 +101,66 @@ namespace Code
 
                 case EnemyState.Chase:
 
-                    if (_canSeePlayer == true)
+                    if (_shootWaitCounter > 0)
                     {
-                        _chaseAdjustCounter -= Time.deltaTime;
-
-                        if (_chaseAdjustCounter <= 0)
+                        if (_canSeePlayer == true)
                         {
-                            _agent.SetDestination(_player.position);
+                            _chaseAdjustCounter -= Time.deltaTime;
 
-                            _chaseAdjustCounter = 0.2f;
+                            if (_chaseAdjustCounter <= 0)
+                            {
+                                _agent.SetDestination(_player.position);
+
+                                _chaseAdjustCounter = 0.2f;
+                            }
+                        }
+
+                        _shootWaitCounter -= Time.deltaTime;
+                        if (_shootWaitCounter <= 0)
+                        {
+                            _shootMoveCounter = _moveAfterShootTime;
+                            _agent.isStopped = true;
+
+                            _animator.SetTrigger("Aiming");
+                            _animator.SetBool("Chase", false);
+
+                            _waitToShoot = _moveAfterShootTime * 0.25f;
                         }
                     }
                     else
                     {
+                        _shootMoveCounter -= Time.deltaTime;
+                        if (_shootMoveCounter <= 0)
+                        {
+                            _shootWaitCounter = _timeToShoot;
+
+                            _agent.isStopped = false;
+                            _agent.SetDestination(_player.position);
+
+                            _animator.SetBool("Chase", true);
+                            _chaseAdjustCounter = 0.2f;
+                        }
+
+                        if (_waitToShoot > 0)
+                        {
+                            _waitToShoot -= Time.deltaTime;
+                            if (_waitToShoot <= 0)
+                            {
+                                Debug.Log("Игрока подстрелили!");
+
+                                _animator.SetTrigger("Shoot");
+                            }
+                        }
+
+                        transform.LookAt(new Vector3(_player.position.x, transform.position.y, _player.position.z));
+                    }
+
+                    if (_canSeePlayer == false)
+                    {
+                        _searchPosition = _player.position;
+
+                        _animator.SetBool("Chase", true);
+
                         StartSearching();
                     }
 
@@ -137,6 +186,7 @@ namespace Code
                 _agent.isStopped = true;
 
                 _animator.SetBool("Walking", false);
+                _animator.SetBool("Chase", false);
 
                 _searchCounter -= Time.deltaTime;
 
@@ -148,6 +198,7 @@ namespace Code
                     _agent.SetDestination(_patrolPoints[_currentPatrolPoint].position);
 
                     _animator.SetBool("Walking", true);
+                    _agent.speed = _walkSpeed;
                 }
 
                 _lookAroundCounter -= Time.deltaTime;
@@ -169,6 +220,7 @@ namespace Code
         {
             _currentState = EnemyState.Chase;
             _animator.SetBool("Chase", true);
+            _animator.SetBool("Walking", false);
 
             _agent.SetDestination(_player.position);
             _agent.isStopped = false;
@@ -176,6 +228,8 @@ namespace Code
             _agent.speed = _chaseSpeed;
 
             _chaseAdjustCounter = 0.2f;
+
+            _shootWaitCounter = _timeToShoot;
         }
 
         private void StartSearching()
@@ -186,6 +240,9 @@ namespace Code
 
             _agent.SetDestination(_searchPosition);
             _agent.isStopped = false;
+            _agent.speed = _walkSpeed;
+
+            _animator.SetBool("Chase", false);
             _animator.SetBool("Walking", true);
 
             _lookAroundCounter = 0;
