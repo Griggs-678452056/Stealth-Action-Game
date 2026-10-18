@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
@@ -45,6 +46,9 @@ namespace Code
 
         [SerializeField] private float _timeToShoot, _moveAfterShootTime;
         private float _shootWaitCounter, _shootMoveCounter, _waitToShoot;
+        [SerializeField] private Transform _shootPoint;
+        [SerializeField] private GameObject _projectile;
+
 
         private void Start()
         {
@@ -146,9 +150,9 @@ namespace Code
                             _waitToShoot -= Time.deltaTime;
                             if (_waitToShoot <= 0)
                             {
-                                Debug.Log("Игрока подстрелили!");
-
                                 _animator.SetTrigger("Shoot");
+
+                                Instantiate(_projectile, _shootPoint.position, _shootPoint.rotation);
                             }
                         }
 
