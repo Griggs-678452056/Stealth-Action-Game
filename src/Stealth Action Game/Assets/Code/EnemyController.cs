@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
@@ -109,6 +108,8 @@ namespace Code
                     {
                         if (_canSeePlayer == true)
                         {
+                            transform.LookAt(new Vector3(_player.position.x, transform.position.y, _player.position.z));
+
                             _chaseAdjustCounter -= Time.deltaTime;
 
                             if (_chaseAdjustCounter <= 0)

@@ -259,5 +259,13 @@ namespace Code
 
             _uiController.UpdateAmmoText(_currentAmmo, _remainingAmmo);
         }
+
+        public void GetKilled()
+        {
+            _animator.SetTrigger("Die");
+
+            _characterController.enabled = false;
+            enabled = false;  //деактивация скрипта PlayerController, чтобы игрок не мог двигаться и враг его не находил
+        }
     }
 }

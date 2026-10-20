@@ -1,23 +1,26 @@
 using UnityEngine;
 
-public class ShootableObject : MonoBehaviour
+namespace Code
 {
-    [SerializeField] private GameObject _destroyEffect;
-
-    [SerializeField] private GameObject _ammoToDrop;
-    [Range(0f, 100f)]
-    [SerializeField] private float _ammoChance;
-
-    public void DestroyObject()
+    public class ShootableObject : MonoBehaviour
     {
-        Destroy(gameObject);
-        Instantiate(_destroyEffect, transform.position, transform.rotation);
+        [SerializeField] private GameObject _destroyEffect;
 
-        if (_ammoToDrop != null)
+        [SerializeField] private GameObject _ammoToDrop;
+        [Range(0f, 100f)]
+        [SerializeField] private float _ammoChance;
+
+        public void DestroyObject()
         {
-            if (Random.Range(0f, 100f) < _ammoChance)
+            Destroy(gameObject);
+            Instantiate(_destroyEffect, transform.position, transform.rotation);
+
+            if (_ammoToDrop != null)
             {
-                Instantiate(_ammoToDrop, transform.position, _ammoToDrop.transform.rotation);
+                if (Random.Range(0f, 100f) < _ammoChance)
+                {
+                    Instantiate(_ammoToDrop, transform.position, _ammoToDrop.transform.rotation);
+                }
             }
         }
     }

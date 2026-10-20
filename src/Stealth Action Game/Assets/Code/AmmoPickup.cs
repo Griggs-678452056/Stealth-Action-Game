@@ -1,17 +1,19 @@
-using Code;
 using UnityEngine;
 
-public class AmmoPickup : MonoBehaviour
+namespace Code
 {
-    [SerializeField] private int _amountToAdd;
-
-    private void OnTriggerEnter(Collider other)
+    public class AmmoPickup : MonoBehaviour
     {
-        if (other.CompareTag("Player"))
-        {
-            other.GetComponent<PlayerController>().GetAmmo(_amountToAdd);
+        [SerializeField] private int _amountToAdd;
 
-            Destroy(gameObject);
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Player"))
+            {
+                other.GetComponent<PlayerController>().GetAmmo(_amountToAdd);
+
+                Destroy(gameObject);
+            }
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Code
         {
             if (other.CompareTag("Player"))
             {
-                Debug.Log("Player hit by enemy projectile!");
+                other.gameObject.GetComponent<PlayerHealthController>().TakeDamage();
             }
 
             Destroy(gameObject);
