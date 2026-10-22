@@ -121,7 +121,7 @@ namespace Code
                         }
 
                         _shootWaitCounter -= Time.deltaTime;
-                        if (_shootWaitCounter <= 0)
+                        if (_shootWaitCounter <= 0 || Vector3.Distance(_player.position, transform.position) < _playerViewRange / 2)
                         {
                             _shootMoveCounter = _moveAfterShootTime;
                             _agent.isStopped = true;
@@ -130,6 +130,8 @@ namespace Code
                             _animator.SetBool("Chase", false);
 
                             _waitToShoot = _moveAfterShootTime * 0.25f;
+
+                            _shootWaitCounter = 0;
                         }
                     }
                     else

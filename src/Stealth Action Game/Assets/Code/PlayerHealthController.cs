@@ -20,6 +20,8 @@ namespace Code
             if (_currentHealth <= 0)
             {
                 GetComponent<PlayerController>().GetKilled();
+
+                UIController.Instance.ShowGameOverPanel();
             }
 
             UIController.Instance.UpdateHealth(_currentHealth, _startingHealth);

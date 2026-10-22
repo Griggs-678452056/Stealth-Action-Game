@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Code
@@ -11,6 +12,8 @@ namespace Code
         [SerializeField] private TMP_Text _ammoText;
 
         [SerializeField] private Slider _healthSlider;
+
+        [SerializeField] private GameObject _gameOverPanel;
 
         private void Awake()
         {
@@ -31,6 +34,21 @@ namespace Code
         {
             _healthSlider.maxValue = maxHealth;
             _healthSlider.value = currentHealth;
+        }
+
+        public void ShowGameOverPanel()
+        {
+            _gameOverPanel.SetActive(true);
+        }
+
+        public void RestartGame()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+
+        public void QuitGame()
+        {
+            Application.Quit();
         }
     }
 }
