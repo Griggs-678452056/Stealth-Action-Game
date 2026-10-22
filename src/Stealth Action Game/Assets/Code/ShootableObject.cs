@@ -10,6 +10,10 @@ namespace Code
         [Range(0f, 100f)]
         [SerializeField] private float _ammoChance;
 
+        [SerializeField] private GameObject _healthPickupToDrop;
+        [Range(0f, 100f)]
+        [SerializeField] private float _healthPickupChance;
+
         public void DestroyObject()
         {
             Destroy(gameObject);
@@ -19,7 +23,15 @@ namespace Code
             {
                 if (Random.Range(0f, 100f) < _ammoChance)
                 {
-                    Instantiate(_ammoToDrop, transform.position, _ammoToDrop.transform.rotation);
+                    Instantiate(_ammoToDrop, transform.position + new Vector3 (-.25f, 0f, 0f), _ammoToDrop.transform.rotation);
+                }
+            }
+            
+            if (_healthPickupChance > 0f && _healthPickupToDrop != null)
+            {
+                if (Random.Range(0f, 100f) < _healthPickupChance)
+                {
+                    Instantiate(_healthPickupToDrop, transform.position + new Vector3 (.25f, 0f, 0f), _healthPickupToDrop.transform.rotation);
                 }
             }
         }

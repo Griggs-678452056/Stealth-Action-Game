@@ -24,5 +24,17 @@ namespace Code
 
             UIController.Instance.UpdateHealth(_currentHealth, _startingHealth);
         }
+
+        public void Heal(int healthToAdd)
+        {
+            _currentHealth += healthToAdd;
+
+            if (_currentHealth > _startingHealth)
+            {
+                _currentHealth = _startingHealth;
+            }
+
+            UIController.Instance.UpdateHealth(_currentHealth, _startingHealth);
+        }
     }
 }

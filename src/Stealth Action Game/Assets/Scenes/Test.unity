@@ -475,7 +475,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShootableObject
   _destroyEffect: {fileID: 4539270417294099096, guid: 67239b82fcdd0cc419eaf7dc6f157cbe, type: 3}
   _ammoToDrop: {fileID: 5379161587546381669, guid: 8f198bd42df431b449910ac2c3438e03, type: 3}
-  _ammoChance: 67
+  _ammoChance: 25
+  _healthPickupToDrop: {fileID: 982265242324125758, guid: 6c59e7a4a99a4e648b7f6ebef291e423, type: 3}
+  _healthPickupChance: 25
 --- !u!65 &177217659
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2112,7 +2114,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShootableObject
   _destroyEffect: {fileID: 4539270417294099096, guid: 67239b82fcdd0cc419eaf7dc6f157cbe, type: 3}
   _ammoToDrop: {fileID: 5379161587546381669, guid: 8f198bd42df431b449910ac2c3438e03, type: 3}
-  _ammoChance: 67
+  _ammoChance: 25
+  _healthPickupToDrop: {fileID: 982265242324125758, guid: 6c59e7a4a99a4e648b7f6ebef291e423, type: 3}
+  _healthPickupChance: 25
 --- !u!65 &489371344
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2429,7 +2433,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShootableObject
   _destroyEffect: {fileID: 4539270417294099096, guid: 67239b82fcdd0cc419eaf7dc6f157cbe, type: 3}
   _ammoToDrop: {fileID: 5379161587546381669, guid: 8f198bd42df431b449910ac2c3438e03, type: 3}
-  _ammoChance: 67
+  _ammoChance: 25
+  _healthPickupToDrop: {fileID: 982265242324125758, guid: 6c59e7a4a99a4e648b7f6ebef291e423, type: 3}
+  _healthPickupChance: 25
 --- !u!65 &663661058
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2652,7 +2658,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShootableObject
   _destroyEffect: {fileID: 4539270417294099096, guid: 67239b82fcdd0cc419eaf7dc6f157cbe, type: 3}
   _ammoToDrop: {fileID: 5379161587546381669, guid: 8f198bd42df431b449910ac2c3438e03, type: 3}
-  _ammoChance: 67
+  _ammoChance: 25
+  _healthPickupToDrop: {fileID: 982265242324125758, guid: 6c59e7a4a99a4e648b7f6ebef291e423, type: 3}
+  _healthPickupChance: 25
 --- !u!65 &703141464
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8512,7 +8520,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShootableObject
   _destroyEffect: {fileID: 4539270417294099096, guid: 67239b82fcdd0cc419eaf7dc6f157cbe, type: 3}
   _ammoToDrop: {fileID: 5379161587546381669, guid: 8f198bd42df431b449910ac2c3438e03, type: 3}
-  _ammoChance: 67
+  _ammoChance: 25
+  _healthPickupToDrop: {fileID: 982265242324125758, guid: 6c59e7a4a99a4e648b7f6ebef291e423, type: 3}
+  _healthPickupChance: 25
 --- !u!65 &1538083437
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9036,7 +9046,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShootableObject
   _destroyEffect: {fileID: 4539270417294099096, guid: 67239b82fcdd0cc419eaf7dc6f157cbe, type: 3}
   _ammoToDrop: {fileID: 5379161587546381669, guid: 8f198bd42df431b449910ac2c3438e03, type: 3}
-  _ammoChance: 67
+  _ammoChance: 25
+  _healthPickupToDrop: {fileID: 982265242324125758, guid: 6c59e7a4a99a4e648b7f6ebef291e423, type: 3}
+  _healthPickupChance: 25
 --- !u!65 &1728329359
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9106,7 +9118,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShootableObject
   _destroyEffect: {fileID: 4539270417294099096, guid: 67239b82fcdd0cc419eaf7dc6f157cbe, type: 3}
   _ammoToDrop: {fileID: 5379161587546381669, guid: 8f198bd42df431b449910ac2c3438e03, type: 3}
-  _ammoChance: 67
+  _ammoChance: 25
+  _healthPickupToDrop: {fileID: 982265242324125758, guid: 6c59e7a4a99a4e648b7f6ebef291e423, type: 3}
+  _healthPickupChance: 25
 --- !u!65 &1735451336
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9343,7 +9357,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShootableObject
   _destroyEffect: {fileID: 4539270417294099096, guid: 67239b82fcdd0cc419eaf7dc6f157cbe, type: 3}
   _ammoToDrop: {fileID: 5379161587546381669, guid: 8f198bd42df431b449910ac2c3438e03, type: 3}
-  _ammoChance: 67
+  _ammoChance: 25
+  _healthPickupToDrop: {fileID: 982265242324125758, guid: 6c59e7a4a99a4e648b7f6ebef291e423, type: 3}
+  _healthPickupChance: 25
 --- !u!65 &1896742998
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9377,6 +9393,7 @@ GameObject:
   - component: {fileID: 1915098368}
   - component: {fileID: 1915098367}
   - component: {fileID: 1915098366}
+  - component: {fileID: 1915098370}
   m_Layer: 0
   m_Name: Ground
   m_TagString: Ground
@@ -9478,6 +9495,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1915098370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915098365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d5a897fe1def824895c1b2ddf84b86c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthPickup
+  _healthAmount: 0
 --- !u!4 &1945111504 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7754308f4d4dac84a89d3ef6858b1e5c, type: 3}
@@ -9531,7 +9561,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShootableObject
   _destroyEffect: {fileID: 4539270417294099096, guid: 67239b82fcdd0cc419eaf7dc6f157cbe, type: 3}
   _ammoToDrop: {fileID: 5379161587546381669, guid: 8f198bd42df431b449910ac2c3438e03, type: 3}
-  _ammoChance: 67
+  _ammoChance: 25
+  _healthPickupToDrop: {fileID: 982265242324125758, guid: 6c59e7a4a99a4e648b7f6ebef291e423, type: 3}
+  _healthPickupChance: 25
 --- !u!65 &1951772227
 BoxCollider:
   m_ObjectHideFlags: 0
