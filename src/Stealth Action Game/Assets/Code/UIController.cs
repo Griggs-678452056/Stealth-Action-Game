@@ -15,6 +15,9 @@ namespace Code
 
         [SerializeField] private GameObject _gameOverPanel;
 
+        [SerializeField] private GameObject _levelCompleteScreen;
+        private string _levelToLoad;
+
         private void Awake()
         {
             Instance = this;
@@ -46,9 +49,20 @@ namespace Code
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
+        public void LoadNextLevel()
+        {
+            SceneManager.LoadScene(_levelToLoad);
+        }
+
         public void QuitGame()
         {
             Application.Quit();
+        }
+
+        public void ShowLevelCompleteScreen(string nextLevel)
+        {
+            _levelCompleteScreen.SetActive(true);
+            _levelToLoad = nextLevel;
         }
     }
 }
