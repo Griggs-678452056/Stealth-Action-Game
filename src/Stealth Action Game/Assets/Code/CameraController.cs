@@ -10,6 +10,8 @@ namespace Code
 
         private float _moveSpeed;
 
+        [SerializeField] private bool _snapToPosition;
+
         private PlayerController _playerController;
 
         private void Start()
@@ -21,7 +23,14 @@ namespace Code
 
         private void LateUpdate()
         {
-            transform.position = Vector3.Lerp(transform.position, _player.position + _offset, _moveSpeed * Time.deltaTime);
+            if (_snapToPosition == false)
+            {
+                transform.position = Vector3.Lerp(transform.position, _player.position + _offset, _moveSpeed * Time.deltaTime);
+            }
+            else
+            {
+                transform.position = _player.position + _offset;
+            }
         }
     }
 }

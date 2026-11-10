@@ -48,6 +48,7 @@ namespace Code
         [SerializeField] private Transform _shootPoint;
         [SerializeField] private GameObject _projectile;
 
+        [SerializeField] private GameObject _viewCone;
 
         private void Start()
         {
@@ -314,6 +315,8 @@ namespace Code
                 enabled = false;
 
                 GetComponent<Collider>().enabled = false;
+
+                _viewCone.SetActive(false);
             }
         }
 
