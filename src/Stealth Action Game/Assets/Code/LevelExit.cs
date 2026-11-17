@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Code
@@ -10,6 +12,11 @@ namespace Code
         private float _exitCounter;
 
         [SerializeField] private string _nextLevel;
+
+        private List<EnemyController> _allEnemies = new List<EnemyController>();
+
+        [SerializeField] private float _timeBetweenChecks = 0.2f;
+        private float _checkCounter;
 
         private void Update()
         {
@@ -25,6 +32,20 @@ namespace Code
 
                     UIController.Instance.ShowLevelCompleteScreen(_nextLevel);
                 }
+
+                UIController.Instance.UpdateExitSlider(_exitCounter, _exitWaitTime);
+
+                _checkCounter -= Time.deltaTime;
+                if (_checkCounter <= 0f)
+                {
+                    _checkCounter = _timeBetweenChecks;
+
+                    if(CheckIfSeen() == true)
+                    {
+                        _playerInZone = false;
+                        UIController.Instance.HideExitSlider();
+                    }
+                }
             }
         }
 
@@ -32,8 +53,17 @@ namespace Code
         {
             if(other.CompareTag("Player"))
             {
-                _playerInZone = true;
-                _exitCounter = _exitWaitTime;
+                _allEnemies.Clear();
+                _allEnemies.AddRange(FindObjectsByType<EnemyController>(FindObjectsSortMode.None));
+
+                if (CheckIfSeen() == false)
+                {
+                    _playerInZone = true;
+                    _exitCounter = _exitWaitTime;
+
+                    UIController.Instance.ShowExitSlider();
+                    UIController.Instance.UpdateExitSlider(_exitCounter, _exitWaitTime);
+                }
             }
         }
 
@@ -42,7 +72,24 @@ namespace Code
             if(other.CompareTag("Player"))
             {
                 _playerInZone = false;
+
+                UIController.Instance.HideExitSlider();
             }
+        }
+
+        private bool CheckIfSeen()
+        {
+            bool isSeen = false;
+
+            foreach (EnemyController enemy in _allEnemies)
+            {
+                if (enemy.CurrentState != EnemyController.EnemyState.Normal)
+                {
+                    isSeen = true;
+                }
+            }
+
+            return isSeen;
         }
     }
 }

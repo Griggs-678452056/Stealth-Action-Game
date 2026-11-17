@@ -30,7 +30,7 @@ namespace Code
             Chase,
             Searching
         }
-        [SerializeField] private EnemyState _currentState;
+        [field: SerializeField] public EnemyState CurrentState { get; private set; }
 
         [SerializeField] private float _waitToChase, _waitToSearch;
         private float _chaseCounter, _searchCounter;
@@ -70,7 +70,7 @@ namespace Code
         {
             CheckForPlayer();
 
-            switch (_currentState)
+            switch (CurrentState)
             {
                 case EnemyState.Normal:
                     Patrol();
@@ -200,7 +200,7 @@ namespace Code
 
                 if (_searchCounter <= 0)
                 {
-                    _currentState = EnemyState.Normal;
+                    CurrentState = EnemyState.Normal;
 
                     _agent.isStopped = false;
                     _agent.SetDestination(_patrolPoints[_currentPatrolPoint].position);
@@ -226,7 +226,7 @@ namespace Code
 
         private void StartChasing()
         {
-            _currentState = EnemyState.Chase;
+            CurrentState = EnemyState.Chase;
             _animator.SetBool("Chase", true);
             _animator.SetBool("Walking", false);
 
@@ -242,7 +242,7 @@ namespace Code
 
         private void StartSearching()
         {
-            _currentState = EnemyState.Searching;
+            CurrentState = EnemyState.Searching;
 
             _searchCounter = _searchLength;
 
@@ -288,7 +288,7 @@ namespace Code
 
                 if (_canSeePlayer == true)
                 {
-                    _currentState = EnemyState.Alerted;
+                    CurrentState = EnemyState.Alerted;
 
                     _animator.SetBool("Walking", false);
 

@@ -18,6 +18,8 @@ namespace Code
         [SerializeField] private GameObject _levelCompleteScreen;
         private string _levelToLoad;
 
+        [SerializeField] private Slider _exitSlider;
+
         private void Awake()
         {
             Instance = this;
@@ -63,6 +65,22 @@ namespace Code
         {
             _levelCompleteScreen.SetActive(true);
             _levelToLoad = nextLevel;
+        }
+
+        public void ShowExitSlider()
+        {
+            _exitSlider.gameObject.SetActive(true);
+        }
+
+        public void HideExitSlider()
+        {
+            _exitSlider.gameObject.SetActive(false);
+        }
+
+        public void UpdateExitSlider(float currentValue, float maxValue)
+        {
+            _exitSlider.maxValue = maxValue;
+            _exitSlider.value = maxValue - currentValue;
         }
     }
 }
