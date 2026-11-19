@@ -311,6 +311,8 @@ namespace Code
             {
                 _animator.SetTrigger("Dead");
 
+                CurrentState = EnemyState.Normal;
+
                 _agent.enabled = false;
                 enabled = false;
 
